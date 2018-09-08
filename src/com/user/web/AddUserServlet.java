@@ -47,6 +47,5 @@ public class AddUserServlet extends HttpServlet {
             request.setAttribute("errorMsg", "添加用户信息失败！");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
-
     }
 }

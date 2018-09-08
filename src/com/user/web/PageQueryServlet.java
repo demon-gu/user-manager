@@ -39,6 +39,7 @@ public class PageQueryServlet extends HttpServlet {
 
         int totalItemCount = userService.queryTotalItemCount(pageSize);
         int totalPageCount;
+        //计算总页数
         if (totalItemCount % pageSize == 0) {
             totalPageCount = totalItemCount % pageSize;
         } else {
