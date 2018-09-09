@@ -1,5 +1,6 @@
-package com.user.web;
+package com.user.web.servlet;
 
+import com.user.bean.User;
 import com.user.service.UserService;
 
 import javax.servlet.ServletException;
@@ -13,10 +14,10 @@ import java.io.IOException;
  * TODO
  *
  * @author Demon
- * @date 2018/9/7 19:47
+ * @date 2018/9/7 20:22
  */
-@WebServlet(urlPatterns = "/deleteUserByIdServlet")
-public class DeleteUserByIdServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/queryUserByIdServlet")
+public class QueryUserByIdServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -24,21 +25,21 @@ public class DeleteUserByIdServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //设置编码格式
-        request.setCharacterEncoding("utf-8");
+        //处理修改用户信息之前的查询操作
+        String id = request.getParameter("id");
+        //根据ID获取用户信息
+        UserService userService = new UserService();
+        User userInfo = userService.queryUserById(id);
         String pageNum = request.getParameter("pageNum");
         String pageSize = request.getParameter("pageSize");
-        //获取数据
-        String id = request.getParameter("id");
-        //处理数据
-        UserService userService = new UserService();
-        boolean isDelete = userService.deleteUserById(id);
-        if (isDelete) {
-            //删除成功，需要查询所有用户信息
-            response.sendRedirect("/pageQueryServlet?pageNum=" + pageNum + "&pageSize=" + pageSize);
+        if (userInfo != null) {
+            //查询成功
+            request.setAttribute("user", userInfo);
+            request.setAttribute("pageNum", pageNum);
+            request.setAttribute("pageSize", pageSize);
+            request.getRequestDispatcher("/update.jsp").forward(request, response);
         } else {
-            //删除失败，跳到错误页面
-            request.setAttribute("errorMsg", "删除用户信息失败");
+            request.setAttribute("errorMsg", "查询用户信息失败！");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }

@@ -1,4 +1,4 @@
-package com.user.web;
+package com.user.web.servlet;
 
 import com.user.bean.User;
 import com.user.service.UserService;
@@ -26,7 +26,6 @@ public class QueryAllUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
         UserService userService = new UserService();
         List<User> users = userService.queryAllUser();
         request.setAttribute("userInfoList", users);

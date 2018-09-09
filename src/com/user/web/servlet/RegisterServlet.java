@@ -1,4 +1,4 @@
-package com.user.web;
+package com.user.web.servlet;
 
 import com.user.bean.Admin;
 import com.user.service.UserService;
@@ -25,7 +25,6 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String affirmPassword = request.getParameter("affirmPassword");

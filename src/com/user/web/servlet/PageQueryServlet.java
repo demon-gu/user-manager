@@ -1,4 +1,4 @@
-package com.user.web;
+package com.user.web.servlet;
 
 import com.user.bean.User;
 import com.user.service.UserService;

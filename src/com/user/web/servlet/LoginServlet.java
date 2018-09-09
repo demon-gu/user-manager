@@ -1,13 +1,11 @@
-package com.user.web;
+package com.user.web.servlet;
 
+import com.user.bean.Admin;
 import com.user.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 /**
@@ -25,32 +23,21 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UserService userService = new UserService();
         boolean isLogin = userService.login(username, password);
-        Cookie usernameCookie = null;
-        Cookie passwordCookie = null;
+        HttpSession session = request.getSession();
         String remember = request.getParameter("remember");
+        Admin admin = new Admin();
         if ("rememberMe".equals(remember) && isLogin) {
-            usernameCookie = new Cookie("username", username);
-            passwordCookie = new Cookie("password", password);
-            usernameCookie.setMaxAge(60 * 60 * 24 * 365);
-            passwordCookie.setMaxAge(60 * 60 * 24 * 365);
-            usernameCookie.setPath("/");
-            passwordCookie.setPath("/");
-            response.addCookie(usernameCookie);
-            response.addCookie(passwordCookie);
+            admin.setUsername(username);
+            admin.setPassword(password);
+            session.setAttribute("admin", admin);
         } else if (!"rememberMe".equals(remember)){
-            usernameCookie = new Cookie("username", "");
-            passwordCookie = new Cookie("password", "");
-            usernameCookie.setMaxAge(60 * 60 * 24 * 365);
-            passwordCookie.setMaxAge(60 * 60 * 24 * 365);
-            usernameCookie.setPath("/");
-            passwordCookie.setPath("/");
-            response.addCookie(usernameCookie);
-            response.addCookie(passwordCookie);
+            admin.setUsername(username);
+            admin.setPassword("");
+            session.setAttribute("admin", admin);
         }
 
         if (isLogin) {

@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.user.bean.Admin" %><%--
   author: Demon
   date: 2018/9/6 11:01
 --%>
@@ -42,9 +42,9 @@
             <strong>${errorMsg}</strong>
         </div>
         <label for="inputText" class="sr-only">用户名</label>
-        <input type="text" id="inputText" value="${cookie.username.value}" name="username" class="form-control" placeholder="用户名" required autofocus>
+        <input type="text" id="inputText" value="<%=((Admin)request.getSession().getAttribute("admin")) == null ? "" : ((Admin)request.getSession().getAttribute("admin")).getUsername()%>" name="username" class="form-control" placeholder="用户名" required autofocus>
         <label for="inputPassword" class="sr-only">密码</label>
-        <input type="password" id="inputPassword" value="${cookie.password.value}" name="password" class="form-control" placeholder="密码" required>
+        <input type="password" id="inputPassword" value="<%=((Admin)request.getSession().getAttribute("admin")) == null ? "" : ((Admin)request.getSession().getAttribute("admin")).getPassword()%>" name="password" class="form-control" placeholder="密码" required>
         <div class="checkbox">
             <label>
                 <input type="checkbox" name="remember" checked value="rememberMe"> 记住用户名和密码

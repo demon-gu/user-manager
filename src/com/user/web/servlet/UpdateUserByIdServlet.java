@@ -1,4 +1,4 @@
-package com.user.web;
+package com.user.web.servlet;
 
 import com.user.bean.User;
 import com.user.service.UserService;
@@ -25,7 +25,6 @@ public class UpdateUserByIdServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
         //获取数据
         String id = request.getParameter("id");
         String name = request.getParameter("name");
